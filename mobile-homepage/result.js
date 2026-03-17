@@ -150,16 +150,16 @@ if (!config || !resultCard || !resultKicker || !resultTitle || !resultCaption ||
         return;
       }
 
-      resultImage.src = candidates[candidateIndex];
-      candidateIndex += 1;
-    };
-
-    resultImage.onload = () => {
-      resultMedia.hidden = false;
-    };
-
-    resultImage.onerror = () => {
-      tryNextImage();
+      const preloader = new Image();
+      preloader.onload = () => {
+        resultImage.src = preloader.src;
+        resultMedia.hidden = false;
+      };
+      preloader.onerror = () => {
+        candidateIndex += 1;
+        tryNextImage();
+      };
+      preloader.src = candidates[candidateIndex];
     };
 
     tryNextImage();
