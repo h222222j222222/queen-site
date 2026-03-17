@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#151338" />
+    <title>분석 중...</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="fortune-body page-loading">
+    <main class="page-shell loader-shell">
+      <div class="loader-container">
+        <div class="loader-visual">
+          <div class="loader-ring"></div>
+          <div class="loader-ring loader-ring-inner"></div>
+          <span class="loader-icon">♕</span>
+        </div>
+        <div class="full-loader" id="loaderText" aria-live="polite">
+          잠시만 기다려주세요...
+        </div>
+      </div>
+    </main>
+
+    <div class="audio-dock">
+      <button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" aria-label="배경음악 켜기">
+        🔇
+      </button>
+      <button class="lyrics-toggle" id="lyricsToggle" type="button">가사</button>
+    </div>
+    <audio id="bgmAudio" loop preload="auto" playsinline></audio>
+    <dialog class="lyrics-dialog" id="lyricsDialog">
+      <div class="lyrics-card">
+        <p class="lyrics-label">BGM LYRICS</p>
+        <pre class="lyrics-content" id="lyricsContent">가사를 불러오는 중...</pre>
+        <button class="lyrics-close" id="lyricsClose" type="button">닫기</button>
+      </div>
+    </dialog>
+
+    <script type="module" src="./loading.js"></script>
+    <script type="module" src="./bgm.js"></script>
+  </body>
+</html>

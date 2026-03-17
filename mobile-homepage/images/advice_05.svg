@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Queen advice placeholder 05</title>
+  <desc id="desc">Replace with your local image file.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f2f4ff" />
+      <stop offset="100%" stop-color="#ffece5" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" rx="48" fill="url(#bg)" />
+  <circle cx="134" cy="158" r="88" fill="#dfe7ff" />
+  <circle cx="668" cy="208" r="80" fill="#ffe5d8" />
+  <rect x="92" y="164" width="616" height="672" rx="38" fill="#ffffff" opacity="0.82" />
+  <text x="400" y="398" text-anchor="middle" fill="#2c3850" font-family="Georgia, serif" font-size="58">QUEEN ADVICE</text>
+  <text x="400" y="484" text-anchor="middle" fill="#687694" font-family="Arial, sans-serif" font-size="34" letter-spacing="4">IMAGE 05</text>
+  <text x="400" y="620" text-anchor="middle" fill="#7f8aa4" font-family="Arial, sans-serif" font-size="24">Replace this file with your local meme image.</text>
+</svg>

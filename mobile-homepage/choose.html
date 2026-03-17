@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="오늘의 운세와 조언을 확인하고, 현재 감정에 따라 카드 세 장 중 하나를 고르는 모바일 웹페이지입니다."
+    />
+    <meta name="theme-color" content="#2b1e2f" />
+    <title>오늘의 운세</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="fortune-body page-choose">
+    <main class="page-shell">
+      <section class="panel-card choose-panel">
+        <div class="panel-decor" aria-hidden="true">
+          <span class="panel-corner panel-corner-tl"></span>
+          <span class="panel-corner panel-corner-tr"></span>
+          <span class="panel-corner panel-corner-br"></span>
+          <span class="panel-corner panel-corner-bl"></span>
+        </div>
+        <div class="cover-arch cover-arch-small" aria-hidden="true"><span>QUEEN'S MIND</span></div>
+
+        <div class="choose-head">
+          <h1 class="display-title choose-title">오늘의 운세</h1>
+          <p class="choose-guide">지금 마음이 끌리는 감정을 고르세요.</p>
+        </div>
+
+        <section class="fortune-preview" aria-live="polite">
+          <p class="fortune-inline fortune-inline-main" id="chooseMindHeadline"></p>
+          <p class="fortune-inline fortune-inline-soft" id="chooseMindAdvice"></p>
+        </section>
+
+        <section class="mood-section" aria-label="감정 선택">
+          <div class="mood-tabs" id="moodTabs">
+            <button class="mood-tab is-active" data-mode="anger" type="button">To.빌런</button>
+            <button class="mood-tab" data-mode="comfort" type="button">멘탈관리</button>
+            <button class="mood-tab" data-mode="laugh" type="button">조언</button>
+          </div>
+        </section>
+
+        <section class="pick-section" aria-labelledby="pickTitle">
+          <h2 class="pick-heading" id="pickTitle">세 장의 카드 중 하나를 선택하세요.</h2>
+          <div class="pick-deck" id="pickDeck">
+            <a class="pick-card pick-card-left" data-card-link href="./result.html?mode=anger&amp;pick=1">
+              <span class="pick-card-mark">I</span>
+            </a>
+            <a class="pick-card pick-card-center" data-card-link href="./result.html?mode=anger&amp;pick=2">
+              <span class="pick-card-mark">II</span>
+            </a>
+            <a class="pick-card pick-card-right" data-card-link href="./result.html?mode=anger&amp;pick=3">
+              <span class="pick-card-mark">III</span>
+            </a>
+          </div>
+          <p class="mood-note" id="moodNote">시선이 제일 먼저 닿는 곳이 퀸의 답입니다.</p>
+        </section>
+      </section>
+    </main>
+
+    <div class="audio-dock">
+      <button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" aria-label="배경음악 켜기">
+        🔇
+      </button>
+      <button class="lyrics-toggle" id="lyricsToggle" type="button">가사</button>
+    </div>
+    <audio id="bgmAudio" loop preload="auto" playsinline></audio>
+    <dialog class="lyrics-dialog" id="lyricsDialog">
+      <div class="lyrics-card">
+        <p class="lyrics-label">BGM LYRICS</p>
+        <pre class="lyrics-content" id="lyricsContent">가사를 불러오는 중...</pre>
+        <button class="lyrics-close" id="lyricsClose" type="button">닫기</button>
+      </div>
+    </dialog>
+
+    <script type="module" src="./bgm.js"></script>
+    <script type="module" src="./choose.js"></script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="퀸의 마인드 인트로 페이지입니다." />
+    <meta name="theme-color" content="#151338" />
+    <title>퀸의 마인드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="fortune-body page-home">
+    <main class="page-shell">
+      <section class="panel-card home-panel">
+        <div class="home-cta">
+          <a class="primary-link" href="./choose.html">운세 보기</a>
+        </div>
+      </section>
+    </main>
+
+    <div class="audio-dock">
+      <button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" aria-label="배경음악 켜기">
+        🔇
+      </button>
+      <button class="lyrics-toggle" id="lyricsToggle" type="button">가사</button>
+    </div>
+    <audio id="bgmAudio" loop preload="auto" playsinline></audio>
+    <dialog class="lyrics-dialog" id="lyricsDialog">
+      <div class="lyrics-card">
+        <p class="lyrics-label">BGM LYRICS</p>
+        <pre class="lyrics-content" id="lyricsContent">가사를 불러오는 중...</pre>
+        <button class="lyrics-close" id="lyricsClose" type="button">닫기</button>
+      </div>
+    </dialog>
+
+    <script type="module" src="./bgm.js"></script>
+  </body>
+</html>
