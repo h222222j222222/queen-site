@@ -41,11 +41,11 @@ function removeLeadPrefix(text) {
 
 function escapeHtml(text) {
   return text
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function formatLeadForDisplay(text) {
@@ -58,7 +58,9 @@ function shuffleIndices(length) {
 
   for (let index = values.length - 1; index > 0; index -= 1) {
     const randomIndex = Math.floor(Math.random() * (index + 1));
-    [values[index], values[randomIndex]] = [values[randomIndex], values[index]];
+    const temp = values[index];
+    values[index] = values[randomIndex];
+    values[randomIndex] = temp;
   }
 
   return values;
@@ -89,7 +91,10 @@ function loadQueue(length) {
 
   if (length > 1) {
     const shift = ((pick - 1) % length + length) % length;
-    order.push(...order.splice(0, shift));
+    var itemsToMove = order.splice(0, shift);
+    for (var i = 0; i < itemsToMove.length; i++) {
+      order.push(itemsToMove[i]);
+    }
   }
 
   return {
@@ -101,7 +106,11 @@ function loadQueue(length) {
 }
 
 function saveQueue(state) {
-  sessionStorage.setItem(QUEUE_KEY, JSON.stringify(state));
+  try {
+    sessionStorage.setItem(QUEUE_KEY, JSON.stringify(state));
+  } catch (error) {
+    // Ignore Storage quota/Security errors
+  }
 }
 
 function getNextItemIndex(length) {
@@ -111,7 +120,9 @@ function getNextItemIndex(length) {
     state.order = shuffleIndices(length);
 
     if (length > 1 && state.order[0] === state.lastIndex) {
-      [state.order[0], state.order[1]] = [state.order[1], state.order[0]];
+      const temp = state.order[0];
+      state.order[0] = state.order[1];
+      state.order[1] = temp;
     }
 
     state.pointer = 0;
@@ -200,9 +211,11 @@ if (!config || !resultCard || !resultKicker || !resultTitle || !resultCaption ||
     }
   }
 
-  rerollButton?.addEventListener("click", () => {
-    showResult(true);
-  });
+  if (rerollButton) {
+    rerollButton.addEventListener("click", () => {
+      showResult(true);
+    });
+  }
 
   showResult(false);
 }

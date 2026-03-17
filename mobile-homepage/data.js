@@ -77,14 +77,15 @@ const melbourneTips = [
   "장 볼 때는 재사용 가방을 하나 들고 다니세요. 별거 아닌데 생활 피로를 줄여주는 멜버른형 생존 팁입니다.",
 ];
 
-export const queenMindDeck = queenMindThemes.flatMap((theme, themeIndex) =>
-  melbourneTips.map((tip, tipIndex) => ({
+export const queenMindDeck = queenMindThemes.reduce((acc, theme, themeIndex) => {
+  const tips = melbourneTips.map((tip, tipIndex) => ({
     id: themeIndex * melbourneTips.length + tipIndex + 1,
     headline: theme.headline,
     interpretation: `${theme.interpretation} ${queenMindClosers[(themeIndex + tipIndex) % queenMindClosers.length]}`,
     tip,
-  })),
-);
+  }));
+  return acc.concat(tips);
+}, []);
 
 export const resultModes = {
   anger: {
@@ -253,8 +254,8 @@ const laughSupportLines = [
 export function getLocalDateKey() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
+  const month = (now.getMonth() + 1 < 10 ? "0" : "") + (now.getMonth() + 1);
+  const day = (now.getDate() < 10 ? "0" : "") + now.getDate();
   return `${year}-${month}-${day}`;
 }
 
@@ -287,7 +288,7 @@ export function getRandomIndex(length, previousIndex = -1) {
 }
 
 export function getImageCandidates(mode, id) {
-  const paddedId = String(id).padStart(2, "0");
+  const paddedId = id < 10 ? "0" + id : String(id);
   const basePath = `./images/${mode}/${mode}_${paddedId}`;
 
   return [
@@ -298,30 +299,7 @@ export function getImageCandidates(mode, id) {
   ];
 }
 
-function toQueenTone(text) {
-  return text
-    .replaceAll("퀸께서는", "퀸은")
-    .replaceAll("퀸께서", "퀸이")
-    .replaceAll("분입니다.", "사람이야.")
-    .replaceAll("사람입니다.", "사람이야.")
-    .replaceAll("것입니다.", "거야.")
-    .replaceAll("입니다.", "이야.")
-    .replaceAll("있습니다.", "있어.")
-    .replaceAll("없습니다.", "없어.")
-    .replaceAll("않습니다.", "않아.")
-    .replaceAll("됩니다.", "돼.")
-    .replaceAll("합니다.", "해.")
-    .replaceAll("갑니다.", "가.")
-    .replaceAll("보입니다.", "보여.")
-    .replaceAll("드러납니다.", "드러나.")
-    .replaceAll("가깝습니다.", "가까워.")
-    .replaceAll("있네요.", "있네.")
-    .replaceAll("없네요.", "없네.")
-    .replaceAll("해야 합니다.", "해야 해.")
-    .replaceAll("필요 없습니다.", "필요 없어.")
-    .replaceAll("자격이 있습니다.", "자격이 있어.")
-    .replaceAll("할 수 있습니다.", "할 수 있어.");
-}
+
 
 const angerLeadLines = [
   "퀸, 저건 굳이 상대할 급이 아니야.",
@@ -508,7 +486,7 @@ export function buildResultCopy(mode, item) {
 
   return {
     lead: item.text.trim(),
-    support: laughDirectCopies[item.id - 1]?.support || laughSupportLines[(item.id - 1) % laughSupportLines.length],
+    support: (laughDirectCopies[item.id - 1] && laughDirectCopies[item.id - 1].support) || laughSupportLines[(item.id - 1) % laughSupportLines.length],
     signatureTop: "keep it elegant",
     signatureBottom: "queen to queen",
   };

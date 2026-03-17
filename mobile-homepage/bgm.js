@@ -70,7 +70,7 @@ if (audio && toggle) {
       await audio.play();
       autoplayBlocked = false;
       updateButton();
-    } catch {
+    } catch (e) {
       autoplayBlocked = true;
       updateButton();
       armAutoplayRetry();
@@ -97,6 +97,8 @@ if (audio && toggle) {
     };
 
     window.addEventListener("pointerdown", resume, { once: true });
+    window.addEventListener("touchstart", resume, { once: true });
+    window.addEventListener("click", resume, { once: true });
     window.addEventListener("keydown", resume, { once: true });
   }
 
@@ -149,7 +151,7 @@ if (lyricsToggle && lyricsDialog && lyricsContent && lyricsClose) {
         lyricsContent.textContent = text.trim() || "가사 내용이 아직 비어 있어.";
         lyricsLoaded = true;
         return;
-      } catch {
+      } catch (e) {
         continue;
       }
     }
@@ -197,16 +199,20 @@ function playTone(freq, type, duration, vol) {
   osc.stop(audioCtx.currentTime + duration);
 }
 
-document.addEventListener('pointerenter', (e) => {
-  const target = e.target.closest('button, a, .pick-card, .mood-tab');
-  if (target && !target.disabled) {
-    playTone(600, 'sine', 0.1, 0.03);
-  }
-}, { capture: true, passive: true });
+['pointerenter', 'mouseenter'].forEach((evt) => {
+  document.addEventListener(evt, (e) => {
+    const target = e.target.closest('button, a, .pick-card, .mood-tab');
+    if (target && !target.disabled) {
+      playTone(600, 'sine', 0.1, 0.03);
+    }
+  }, { capture: true, passive: true });
+});
 
-document.addEventListener('pointerdown', (e) => {
-  const target = e.target.closest('button, a, .pick-card, .mood-tab');
-  if (target && !target.disabled) {
-    playTone(400, 'triangle', 0.15, 0.08);
-  }
-}, { capture: true, passive: true });
+['pointerdown', 'touchstart', 'mousedown'].forEach((evt) => {
+  document.addEventListener(evt, (e) => {
+    const target = e.target.closest('button, a, .pick-card, .mood-tab');
+    if (target && !target.disabled) {
+      playTone(400, 'triangle', 0.15, 0.08);
+    }
+  }, { capture: true, passive: true });
+});
