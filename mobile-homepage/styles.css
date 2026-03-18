@@ -87,7 +87,7 @@ button {
 }
 
 .page-result {
-  --page-background: url("images/backgrounds/q_3.png");
+  --page-background: url("./images/backgrounds/q_3.jpg");
 }
 
 .fortune-body::before,
@@ -131,14 +131,12 @@ button {
   min-height: 0;
   border-radius: var(--radius-xl);
   border: 1px solid var(--panel-border);
-  background:
-    linear-gradient(180deg, rgba(101, 60, 81, 0.18), transparent 26%),
-    linear-gradient(180deg, rgba(65, 35, 56, 0.8), rgba(26, 14, 24, 0.9));
   backdrop-filter: blur(8px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     inset 0 -12px 40px rgba(0, 0, 0, 0.14),
     var(--shadow-xl);
+  background: none;
 }
 
 .panel-card::before,
@@ -283,16 +281,23 @@ button {
   background-image:
     linear-gradient(180deg, rgba(31, 14, 25, 0.04), rgba(18, 8, 15, 0.26)),
     linear-gradient(180deg, rgba(255, 247, 236, 0.04), rgba(71, 39, 58, 0.08)),
-    url("images/backgrounds/q_1.png");
+    url("./images/backgrounds/q_1.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 243, 232, 0.04),
-    inset 0 0 36px rgba(17, 8, 14, 0.14),
-    0 28px 60px rgba(8, 4, 8, 0.38);
+  background-color: #1a0e18;
   position: relative;
   overflow: hidden;
+}
+
+.result-panel {
+  background-image:
+    linear-gradient(180deg, rgba(31, 14, 25, 0.1), rgba(18, 8, 15, 0.4)),
+    url("./images/backgrounds/q_3.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #1a0e18;
 }
 
 .home-panel::before {
@@ -371,7 +376,7 @@ button {
   background-image:
     linear-gradient(180deg, rgba(33, 17, 30, 0.2), rgba(19, 9, 16, 0.7)),
     linear-gradient(180deg, rgba(60, 31, 51, 0.26), rgba(24, 11, 21, 0.78)),
-    url("images/backgrounds/q_2.png");
+    url("./images/backgrounds/q_2.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -522,7 +527,7 @@ button {
   border-radius: 20px;
   background-image:
     linear-gradient(180deg, rgba(29, 16, 29, 0.08), rgba(29, 16, 29, 0.2)),
-    url("images/backgrounds/card.png");
+    url("./images/backgrounds/card.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -921,6 +926,68 @@ button {
 @keyframes zoom-glow-in {
   from { opacity: 0; transform: scale(0.96); filter: brightness(0.5) blur(4px); }
   to { opacity: 1; transform: scale(1); filter: brightness(1) blur(0); }
+}
+
+/* Loader Styles */
+.loader-shell {
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  animation: fade-slide-up 0.8s ease-out;
+}
+
+.loader-visual {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-ring {
+  position: absolute;
+  inset: 0;
+  border: 4px solid rgba(220, 184, 132, 0.1);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+.loader-ring-inner {
+  inset: 12px;
+  border-width: 2px;
+  border-top-color: var(--plum-850);
+  border-right-color: var(--gold-soft);
+  animation-duration: 2s;
+  animation-direction: reverse;
+}
+
+.loader-icon {
+  font-size: 2.4rem;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(220, 184, 132, 0.6);
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+.full-loader {
+  color: var(--ivory-soft);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 280px;
+  word-break: keep-all;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 @media (max-width: 428px) {
