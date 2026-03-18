@@ -1,4 +1,4 @@
-const queenMindThemes = [
+var queenMindThemes = [
   {
     headline: "오늘은 퀸의 기준을 지키는 쪽이 이기는 날입니다.",
     interpretation:
@@ -49,9 +49,109 @@ const queenMindThemes = [
     interpretation:
       "거창한 계획보다 단 하나의 선명한 결심이 훨씬 잘 통합니다. 오늘은 퀸이 스스로 정한 한 가지를 지키는 순간 분위기가 달라집니다.",
   },
+  {
+    headline: "칭찬보다 스스로의 확신이 더 큰 힘이 되는 날입니다.",
+    interpretation:
+      "남들의 인정은 덤일 뿐입니다. 오늘은 퀸이 스스로 내린 결론에 힘을 실어줄 때 가장 강력한 운이 따라옵니다.",
+  },
+  {
+    headline: "익숙한 것보다 낯선 시도가 의외의 활력을 주는 날입니다.",
+    interpretation:
+      "늘 가던 길이나 메뉴 대신 조금 다른 선택을 해보세요. 사소한 변화가 퀸의 정체된 생각을 깨워줄 것입니다.",
+  },
+  {
+    headline: "보여지는 모습보다 내실을 다지는 것이 유리한 날입니다.",
+    interpretation:
+      "화려한 겉치레보다 실질적인 결과물을 챙기세요. 오늘은 퀸이 조용히 준비한 실력이 빛을 발하는 타이밍입니다.",
+  },
+  {
+    headline: "거절의 미학이 퀸의 품격을 높여주는 날입니다.",
+    interpretation:
+      "모든 부탁을 들어줄 필요는 없습니다. 정중하지만 단호한 거절이 오히려 퀸에 대한 존중을 이끌어냅니다.",
+  },
+  {
+    headline: "감정의 파도를 타기보다 관조하는 자세가 필요한 날입니다.",
+    interpretation:
+      "기분이 일렁여도 즉각 반응하지 마세요. 한 발짝 멀어지면 퀸의 눈에 상황의 본질이 명확히 보입니다.",
+  },
+  {
+    headline: "작은 낭비보다 확실한 투자가 어울리는 날입니다.",
+    interpretation:
+      "자잘한 소비는 줄이고 퀸의 가치를 높일 수 있는 곳에 집중하세요. 안목 있는 선택이 큰 만족으로 돌아옵니다.",
+  },
+  {
+    headline: "대화의 양보다 질이 비즈니스에 도움을 주는 날입니다.",
+    interpretation:
+      "말을 많이 하기보다 핵심을 찌르는 한마디가 중요합니다. 퀸의 침묵은 때로 백 마디 말보다 큰 설득력을 가집니다.",
+  },
+  {
+    headline: "과거의 성공 경험이 오늘의 열쇠가 되는 날입니다.",
+    interpretation:
+      "예전에 비슷했던 상황을 떠올려 보세요. 퀸이 이미 가졌던 지혜가 지금의 문제를 푸는 가장 빠른 지름길입니다.",
+  },
+  {
+    headline: "복잡한 관계 속에서 나만의 섬을 만들어야 하는 날입니다.",
+    interpretation:
+      "주변 소음에 민감해질 필요 없습니다. 퀸만의 고요한 시간을 확보할수록 판단의 정밀도가 올라갑니다.",
+  },
+  {
+    headline: "예의 바른 태도가 가장 강력한 무기가 되는 날입니다.",
+    interpretation:
+      "상대가 무례해도 퀸은 퀸다운 품위를 유지하세요. 흔들리지 않는 우아함이 결국 상대를 압도하게 됩니다.",
+  },
+  {
+    headline: "미루던 숙제를 끝내기에 가장 적합한 기운의 날입니다.",
+    interpretation:
+      "무겁게 마음 한구석을 차지하던 일을 오늘 처리하세요. 매듭을 짓는 순간 퀸의 에너지가 다시 차오릅니다.",
+  },
+  {
+    headline: "우연한 만남 속에 귀인(貴人)의 힌트가 숨어 있는 날입니다.",
+    interpretation:
+      "스치듯 지나가는 대화에도 귀를 기울여 보세요. 퀸에게 필요한 답을 타인의 입을 통해 듣게 될 수 있습니다.",
+  },
+  {
+    headline: "자신의 직관을 논리보다 우선시해도 좋은 날입니다.",
+    interpretation:
+      "머리로는 계산이 안 서도 마음이 가는 곳이 있다면 믿어보세요. 퀸의 본능은 때로 데이터보다 정확합니다.",
+  },
+  {
+    headline: "아침의 고요함이 하루의 승패를 좌우하는 날입니다.",
+    interpretation:
+      "시작 전 5분만이라도 깊게 호흡하며 하루를 그려보세요. 퀸의 차분한 시작이 도미노처럼 좋은 일을 불러옵니다.",
+  },
+  {
+    headline: "칭찬을 스펀지처럼 흡수하며 자신감을 충전하는 날입니다.",
+    interpretation:
+      "겸손보다는 감사를 선택하세요. 타인의 찬사는 퀸이 그동안 쌓아온 노력에 대한 정당한 보상입니다.",
+  },
+  {
+    headline: "사소한 배려가 예상치 못한 행운으로 돌아오는 날입니다.",
+    interpretation:
+      "가벼운 친절을 베풀어 보세요. 퀸이 뿌린 작은 씨앗이 오후가 지나면 기분 좋은 소식으로 자라납니다.",
+  },
+  {
+    headline: "건강한 신체에 더 맑은 리더십이 깃드는 날입니다.",
+    interpretation:
+      "몸의 신호에 집중하고 충분한 영양을 챙기세요. 퀸의 컨디션이 곧 주변의 에너지를 결정하는 기준이 됩니다.",
+  },
+  {
+    headline: "호기심을 따라 배움의 즐거움을 만끽하는 날입니다.",
+    interpretation:
+      "평소 궁금했던 분야를 살짝 들여다보세요. 새로운 지식은 퀸의 세계관을 한층 더 넓고 풍요롭게 만듭니다.",
+  },
+  {
+    headline: "유머러스한 대처가 긴장된 분위기를 녹여주는 날입니다.",
+    interpretation:
+      "상황이 딱딱할수록 위트를 발휘해 보세요. 퀸의 여유로운 웃음이 가장 세련된 문제 해결 방식입니다.",
+  },
+  {
+    headline: "하루의 마무리를 스스로에게 주는 선물로 채우는 날입니다.",
+    interpretation:
+      "오늘 고생한 퀸을 위해 작은 보상을 준비하세요. 자기 돌봄은 퀸의 품위를 유지하는 핵심 동력입니다.",
+  },
 ];
 
-const queenMindClosers = [
+var queenMindClosers = [
   "집사는 오늘 퀸이 지나치게 애쓰지 않아도 된다고 봅니다.",
   "무리해서 예쁘게 해결하려 하기보다, 퀸답게 정리하는 쪽이 더 맞습니다.",
   "오늘은 완벽보다 기세가, 기세보다 기준이 더 중요합니다.",
@@ -64,7 +164,7 @@ const queenMindClosers = [
   "하루를 전부 잘하려 하지 말고, 중요한 한 장면만 잘 건지면 충분합니다.",
 ];
 
-const melbourneTips = [
+var melbourneTips = [
   "멜버른은 같은 날에도 체감 온도가 크게 바뀌니 얇은 겉옷을 하나 챙기면 하루가 훨씬 덜 고됩니다.",
   "맑아 보여도 자외선이 세게 들어오는 날이 많으니 선크림은 귀찮아도 챙겨두는 편이 좋습니다.",
   "트램과 기차 이동 전에는 myki 잔액을 한 번 확인해두세요. 갑자기 잔액이 모자라면 기분까지 꺾입니다.",
@@ -75,19 +175,42 @@ const melbourneTips = [
   "마트 영수증, 급여 내역, 집 관련 메일은 폴더 하나로 묶어두세요. 생활 안정감이 확 올라갑니다.",
   "호주에서는 작은 스몰톡이 분위기를 부드럽게 만드는 경우가 많으니, 첫인상에서 너무 얼어 있지 않아도 괜찮습니다.",
   "장 볼 때는 재사용 가방을 하나 들고 다니세요. 별거 아닌데 생활 피로를 줄여주는 멜버른형 생존 팁입니다.",
+  "멜버른 시내(CBD)의 무료 트램 구역(Free Tram Zone)을 잘 활용하면 교통비를 꽤 아낄 수 있어 경제적입니다.",
+  "루프탑 바에서 노을을 보며 일기를 써보세요. 멜버른의 스카이라인이 퀸의 문장에 특별한 감성을 더해줄 거예요.",
+  "플린더스 스트리트 역의 노란 시계 아래는 고전적인 약속 장소입니다. 가끔은 기다림 자체를 즐겨보는 것도 우아하죠.",
+  "야라 강변을 따라 밤 산책을 하면 멜버른의 세련된 야경이 퀸의 복잡한 머릿속을 차분히 정리해줍니다.",
+  "유니언 레인(Union Lane)의 그래피티 앞에서 사진을 남겨보세요. 날마다 바뀌는 예술이 퀸의 일상에 색다른 영감을 줍니다.",
+  "사우스 멜버른 마켓의 딤심(Dim Sims)은 줄 서서 먹을 가치가 있습니다. 작은 미식의 즐거움이 하루의 결을 바꿉니다.",
+  "로열 보타닉 가든 산책은 도심 속에서 가장 완벽하게 재충전할 수 있는 방법입니다. 자연의 소리에 집중해보세요.",
+  "멜버른 박물관이나 주립 도서관의 열람실은 차분하게 퀸만의 계획을 구상하기에 더없이 품격 있는 공간입니다.",
+  "커피의 도시답게 매일 다른 로컬 카페를 시도해보세요. 퀸만의 '인생 플랫 화이트'를 찾는 재미가 쏠쏠할 겁니다.",
+  "이탈리아 식당이 많은 라이곤 스트리트(Lygon St)에서는 파스타 한 그릇만으로도 유럽 여행 기분을 낼 수 있습니다.",
+  "피츠로이 가든의 쿡스 코티지 근처는 산책로가 예뻐서 퀸의 우아한 발걸음과 아주 잘 어울리는 장소입니다.",
+  "브런즈윅(Brunswick) 거리의 빈티지 샵들은 유니크한 취향을 가진 퀸에게 보물찾기 같은 즐거움을 선사합니다.",
+  "세인트 킬다(St Kilda) 해변의 일몰은 멜버른 생활 중 꼭 한 번은 온전히 감상해야 할 장엄한 장면입니다.",
+  "빅토리아 마켓의 야시장(Night Market)은 시끌벅적하지만 멜버른의 활기찬 에너지를 직접 느끼기에 최고입니다.",
+  "도심 곳곳의 숨겨진 아케이드(Royal Arcade 등)를 탐험해보세요. 멜버른의 역사를 간직한 건축미에 감탄하게 될 거예요.",
+  "멜버른 가을엔 노랗게 물든 플라타너스 잎들이 유럽 영화 같은 분위기를 만들어주니 천천히 걸어보시길 권합니다.",
+  "스포츠를 좋아한다면 MCG에서 풋티(Footy) 경기를 관람해보세요. 멜버른 사람들의 뜨거운 열정을 체감할 수 있습니다.",
+  "야외 극장(Outdoor Cinema) 시즌엔 와인 한 잔과 함께 영화를 감상해보세요. 퀸만의 낭만적인 밤이 완성됩니다.",
+  "멜버른 근교의 달스포드(Daylesford) 온천 여행은 퀸의 지친 몸과 마음을 달래줄 최고의 주말 휴식처가 됩니다.",
+  "브라이튼 해변(Brighton Beach)의 알록달록한 목욕 박스들을 배경으로 퀸의 밝은 에너지를 사진에 담아보세요.",
 ];
 
-export const queenMindDeck = queenMindThemes.reduce((acc, theme, themeIndex) => {
-  const tips = melbourneTips.map((tip, tipIndex) => ({
-    id: themeIndex * melbourneTips.length + tipIndex + 1,
-    headline: theme.headline,
-    interpretation: `${theme.interpretation} ${queenMindClosers[(themeIndex + tipIndex) % queenMindClosers.length]}`,
-    tip,
-  }));
+window.queenMindDeck = queenMindThemes.reduce(function(acc, theme, themeIndex) {
+  var tips = melbourneTips.map(function(tip, tipIndex) {
+    return {
+      id: themeIndex * melbourneTips.length + tipIndex + 1,
+      headline: theme.headline,
+      interpretation: theme.interpretation + " " + queenMindClosers[(themeIndex + tipIndex) % queenMindClosers.length],
+      tip: tip,
+    };
+  });
   return acc.concat(tips);
 }, []);
 
-export const resultModes = {
+
+window.resultModes = {
   anger: {
     label: "To.빌런",
     title: "퀸과의 뒷담",
@@ -231,7 +354,7 @@ export const resultModes = {
   },
 };
 
-const comfortSupportLines = [
+var comfortSupportLines = [
   "이미 훌륭하게 해내고 계시니, 오늘만큼은 무리해서 증명하려 애쓰지 않으셔도 괜찮습니다.",
   "잠시 마음이 흔들려도 괜찮습니다. 억지로 다잡기보다는 자연스럽게 스쳐가도록 두는 편이 더 우아합니다.",
   "오늘은 더 큰 성과를 이뤄내기보다, 퀸 스스로의 에너지를 깎아내지 않는 것이 가장 중요합니다.",
@@ -242,7 +365,7 @@ const comfortSupportLines = [
   "스스로에게 너무 엄격한 잣대를 대지 않길 바랍니다. 퀸은 지금도 상상 이상으로 잘 해내고 계시니까요.",
 ];
 
-const laughSupportLines = [
+var laughSupportLines = [
   "오늘은 모든 것을 너무 심각하게 받아들이지 말고, 한 번 우아하게 웃고 넘기는 여유가 어울립니다.",
   "이럴 땐 상황을 장악하려는 기세보다 퀸만의 유연한 무드가 훨씬 강력합니다. 부드럽게 넘겨보세요.",
   "골치 아픈 상황을 무겁게 안고 갈 필요가 없습니다. 가벼운 미소와 함께 산뜻하게 넘기는 것이 가장 세련된 대처입니다.",
@@ -251,57 +374,59 @@ const laughSupportLines = [
   "긴 설명이 필요하지 않습니다. 때로는 그저 상황을 가볍게 여유를 부리며 넘기는 것이 가장 확실한 해답입니다.",
 ];
 
-export function getLocalDateKey() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = (now.getMonth() + 1 < 10 ? "0" : "") + (now.getMonth() + 1);
-  const day = (now.getDate() < 10 ? "0" : "") + now.getDate();
-  return `${year}-${month}-${day}`;
+function getLocalDateKey() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = (now.getMonth() + 1 < 10 ? "0" : "") + (now.getMonth() + 1);
+  var day = (now.getDate() < 10 ? "0" : "") + now.getDate();
+  return year + "-" + month + "-" + day;
 }
 
-export function formatKoreanDate() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  return `${year}년 ${month}월 ${day}일 퀸의 마인드`;
+function formatKoreanDate() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = now.getMonth() + 1;
+  var day = now.getDate();
+  return year + "년 " + month + "월 " + day + "일 퀸의 마인드";
 }
 
-export function getTodayMind() {
-  const today = getLocalDateKey();
-  let hash = 0;
-  for (let index = 0; index < today.length; index += 1) {
+function getTodayMind() {
+  var today = getLocalDateKey();
+  var hash = 0;
+  for (var index = 0; index < today.length; index += 1) {
     hash += today.charCodeAt(index);
   }
   return queenMindDeck[hash % queenMindDeck.length];
 }
 
-export function getRandomIndex(length, previousIndex = -1) {
+function getRandomIndex(length, previousIndex = -1) {
   if (length <= 1) {
     return 0;
   }
-  let nextIndex = Math.floor(Math.random() * length);
+  var nextIndex = Math.floor(Math.random() * length);
   while (nextIndex === previousIndex) {
     nextIndex = Math.floor(Math.random() * length);
   }
   return nextIndex;
 }
 
-export function getImageCandidates(mode, id) {
-  const paddedId = id < 10 ? "0" + id : String(id);
-  const basePath = `./images/${mode}/${mode}_${paddedId}`;
-
+window.getImageCandidates = function(mode, id) {
+  var paddedId = id < 10 ? "0" + id : String(id);
+  // Ensure strict relative path and lowercase mode/filename (filenames are already lowercase)
+  var basePath = "./images/" + mode.toLowerCase() + "/" + mode.toLowerCase() + "_" + paddedId;
+  // Use a unique version query string for cache busting
+  var v = "?v=2.1"; 
   return [
-    `${basePath}.jpg`,
-    `${basePath}.jpeg`,
-    `${basePath}.png`,
-    `${basePath}.webp`,
+    basePath + ".jpg" + v,
+    basePath + ".png" + v,
+    basePath + ".webp" + v,
+    basePath + ".jpeg" + v
   ];
 }
 
 
 
-const angerLeadLines = [
+var angerLeadLines = [
   "퀸, 저건 굳이 상대할 급이 아니야.",
   "퀸, 그런 건 반응해줄수록 더 붙잖아.",
   "퀸, 이미 답 나온 상황인데 괜히 시간 쓰지 마.",
@@ -310,7 +435,7 @@ const angerLeadLines = [
   "퀸, 괜히 퀸 손으로 정리해줄 필요 없어.",
 ];
 
-const angerBridgeLines = [
+var angerBridgeLines = [
   "가만히 둬도 스스로 수준을 드러내는 부류라서, 퀸이 굳이 설명까지 얹어줄 이유가 없어.",
   "그런 건 길게 상대하는 순간 퀸 시간만 아까워지니까, 짧게 보고 흘리는 게 제일 우아해.",
   "애초에 결이 다른 상황이라서, 퀸이 예의를 다해 맞춰줄수록 더 손해야.",
@@ -319,7 +444,7 @@ const angerBridgeLines = [
   "수준 차이 나는 상황일수록 퀸이 조용히 거리 두는 쪽이 더 또렷하게 먹히더라.",
 ];
 
-const angerCloseLines = [
+var angerCloseLines = [
   "그러니까 괜히 퀸 기분까지 거기에 얹지 마. 퀸은 더 중요한 데에만 힘 쓰면 돼.",
   "그런 건 퀸 하루를 흔들 정도의 일이 아니야. 그냥 퀸 자리에서 흘리면 돼.",
   "퀸은 그런 데에 설명하고 증명할 사람이 아니잖아. 선만 긋고 지나가.",
@@ -328,7 +453,7 @@ const angerCloseLines = [
   "퀸은 그런 소음까지 책임질 필요 없어. 시선만 거두면 끝이야.",
 ];
 
-const comfortLeadLines = [
+var comfortLeadLines = [
   "퀸, 오늘은 퀸 편부터 드는 쪽이 맞아.",
   "퀸, 괜히 더 단단한 척할 필요 없어.",
   "퀸, 이미 충분한데 자꾸 더 하려 들지 마.",
@@ -337,7 +462,7 @@ const comfortLeadLines = [
   "퀸, 오늘은 퀸 기준으로만 하루를 정리해도 돼.",
 ];
 
-const comfortBridgeLines = [
+var comfortBridgeLines = [
   "남들은 몰라도 퀸은 알잖아. 버텨온 시간도, 조용히 해낸 것들도 생각보다 훨씬 크다는 걸.",
   "괜히 더 완벽해 보이려고 힘 빼지 마. 이미 가진 무게가 있어서 그 정도 애씀까지는 필요 없거든.",
   "지금 흔들리는 감정도 다 이유가 있는 거라서, 억지로 정리하려 들기보다 그대로 인정하는 편이 더 나아.",
@@ -346,7 +471,7 @@ const comfortBridgeLines = [
   "퀸은 원래 크게 말하지 않아도 되는 사람이잖아. 그래서 조용한 확신이 더 잘 어울려.",
 ];
 
-const comfortCloseLines = [
+var comfortCloseLines = [
   "그러니까 오늘은 괜히 작아지지 말고, 퀸 자리 그대로 있으면 돼.",
   "남 기준 맞추느라 기운 빼지 말고, 퀸 마음 편한 쪽으로 가.",
   "퀸은 이미 충분하니까 오늘만큼은 더 증명하려고 하지 마.",
@@ -355,7 +480,7 @@ const comfortCloseLines = [
   "지금 필요한 건 더 많은 힘이 아니라, 퀸이 자기 편이라는 감각이야.",
 ];
 
-const adviceLeadLines = [
+var adviceLeadLines = [
   "퀸, 오늘은 너무 진지하게만 가지 마.",
   "퀸, 이런 날은 한 발 비껴 보는 쪽이 더 잘 맞아.",
   "퀸, 세상 일 다 정면승부로 받을 필요는 없잖아.",
@@ -364,7 +489,7 @@ const adviceLeadLines = [
   "퀸, 이런 건 가볍게 받아도 은근 오래 가더라.",
 ];
 
-const adviceBridgeLines = [
+var adviceBridgeLines = [
   "의외로 그렇게 힘을 빼고 봐야 답이 더 또렷해질 때가 있거든.",
   "너무 똑바로만 보지 말고 한 번쯤 웃으면서 넘기면, 생각보다 더 쉽게 풀릴 수 있어.",
   "괜히 심각해지는 순간 분위기만 무거워지니까, 퀸 페이스대로 가볍게 틀어도 충분해.",
@@ -373,7 +498,7 @@ const adviceBridgeLines = [
   "이럴수록 한 톤 가볍게 받아치는 감각이 퀸한테 더 잘 어울려.",
 ];
 
-const adviceCloseLines = [
+var adviceCloseLines = [
   "그러니까 괜히 인상 쓰지 말고, 퀸답게 한 번 웃고 지나가.",
   "오늘은 무게보다 여유가 더 어울려. 퀸은 그걸로 충분해.",
   "심각함까지 챙길 필요는 없어. 퀸 페이스대로 흘리면 결국 정리돼.",
@@ -382,7 +507,7 @@ const adviceCloseLines = [
   "오늘은 굳이 힘주지 말고, 퀸답게 느긋하게 마무리하면 돼.",
 ];
 
-const laughDirectCopies = [
+var laughDirectCopies = [
   {
     lead: "퀸, 조폭 마누라 시절로 회귀할 필요까진 없으십니다.",
     support: "성가신 일들은 알아서 떨어져 나가게 두세요. 퀸께서는 그저 우아하게 지나가시면 그만입니다.",
@@ -465,13 +590,13 @@ const laughDirectCopies = [
   },
 ];
 
-export function buildResultCopy(mode, item) {
+window.buildResultCopy = function(mode, item) {
   if (mode === "anger") {
     return {
       lead: item.target.trim(),
       support: item.queen.trim(),
       signatureTop: "keep your crown on",
-      signatureBottom: "queen to queen",
+      signatureBottom: "queen to queen"
     };
   }
 
@@ -480,7 +605,7 @@ export function buildResultCopy(mode, item) {
       lead: item.text.trim(),
       support: comfortSupportLines[(item.id - 1) % comfortSupportLines.length],
       signatureTop: "stay on your side",
-      signatureBottom: "queen to queen",
+      signatureBottom: "queen to queen"
     };
   }
 
@@ -488,6 +613,6 @@ export function buildResultCopy(mode, item) {
     lead: item.text.trim(),
     support: (laughDirectCopies[item.id - 1] && laughDirectCopies[item.id - 1].support) || laughSupportLines[(item.id - 1) % laughSupportLines.length],
     signatureTop: "keep it elegant",
-    signatureBottom: "queen to queen",
+    signatureBottom: "queen to queen"
   };
 }

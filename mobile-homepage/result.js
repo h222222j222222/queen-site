@@ -1,221 +1,231 @@
-import { buildResultCopy, getImageCandidates, getLocalDateKey, resultModes } from "./data.js";
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var mode = params.get("mode");
+  var pick = Number(params.get("pick") || 1);
+  var config = mode ? window.resultModes[mode] : null;
 
-const params = new URLSearchParams(window.location.search);
-const mode = params.get("mode");
-const pick = Number(params.get("pick") || 1);
-const config = mode ? resultModes[mode] : null;
+  var resultCard = document.getElementById("resultCard");
+  var resultKicker = document.getElementById("resultKicker");
+  var resultTitle = document.getElementById("resultTitle");
+  var resultCaption = document.getElementById("resultCaption");
+  var resultSignature = document.getElementById("resultSignature");
+  var resultMedia = document.getElementById("resultMedia");
+  var resultImage = document.getElementById("resultImage");
+  var rerollButton = document.getElementById("rerollButton");
+  var QUEUE_KEY = "queen-result-queue:" + (mode || "unknown") + ":" + pick;
 
+  var renderTimer = 0;
 
-const resultCard = document.getElementById("resultCard");
-const resultKicker = document.getElementById("resultKicker");
-const resultTitle = document.getElementById("resultTitle");
-const resultCaption = document.getElementById("resultCaption");
-const resultSignature = document.getElementById("resultSignature");
-const resultMedia = document.getElementById("resultMedia");
-const resultImage = document.getElementById("resultImage");
-const rerollButton = document.getElementById("rerollButton");
-const QUEUE_KEY = `queen-result-queue:${mode || "unknown"}:${pick}`;
+  function splitLeadText(text) {
+    var normalized = text.trim();
+    var match = normalized.match(/(.+?[.!?])\s*(.*)/);
 
-let renderTimer = 0;
+    if (!match) {
+      return {
+        primary: normalized,
+        secondary: ""
+      };
+    }
 
-function splitLeadText(text) {
-  const normalized = text.trim();
-  const match = normalized.match(/(.+?[.!?])\s*(.*)/);
-
-  if (!match) {
     return {
-      primary: normalized,
-      secondary: "",
+      primary: match[1].trim(),
+      secondary: match[2].trim()
     };
   }
 
-  return {
-    primary: match[1].trim(),
-    secondary: match[2].trim(),
-  };
-}
-
-function removeLeadPrefix(text) {
-  return text.trim().replace(/^퀸,\s*/u, "");
-}
-
-function escapeHtml(text) {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function formatLeadForDisplay(text) {
-  const normalized = text.trim().replace(/\s+/g, " ");
-  return escapeHtml(normalized);
-}
-
-function shuffleIndices(length) {
-  const values = Array.from({ length }, (_, index) => index);
-
-  for (let index = values.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
-    const temp = values[index];
-    values[index] = values[randomIndex];
-    values[randomIndex] = temp;
+  function removeLeadPrefix(text) {
+    // legacy environments don't like 'u' flag
+    return text.trim().replace(/^퀸,\s*/, "");
   }
 
-  return values;
-}
+  function escapeHtml(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
 
-function loadQueue(length) {
-  const today = getLocalDateKey();
+  function formatLeadForDisplay(text) {
+    var normalized = text.trim().replace(/\s+/g, " ");
+    return escapeHtml(normalized);
+  }
 
-  try {
-    const saved = sessionStorage.getItem(QUEUE_KEY);
+  function shuffleIndices(length) {
+    var values = [];
+    for (var i = 0; i < length; i++) values.push(i);
 
-    if (saved) {
-      const state = JSON.parse(saved);
-      const isValidOrder =
-        Array.isArray(state.order) &&
-        state.order.length === length &&
-        state.order.every((value) => Number.isInteger(value) && value >= 0 && value < length);
+    for (var index = values.length - 1; index > 0; index -= 1) {
+      var randomIndex = Math.floor(Math.random() * (index + 1));
+      var temp = values[index];
+      values[index] = values[randomIndex];
+      values[randomIndex] = temp;
+    }
 
-      if (state.day === today && isValidOrder && Number.isInteger(state.pointer) && Number.isInteger(state.lastIndex)) {
-        return state;
+    return values;
+  }
+
+  function loadQueue(length) {
+    var today = window.getLocalDateKey();
+
+    try {
+      var saved = sessionStorage.getItem(QUEUE_KEY);
+
+      if (saved) {
+        var state = JSON.parse(saved);
+        var isValidOrder =
+          Array.isArray(state.order) &&
+          state.order.length === length &&
+          state.order.every(function(value) { return typeof value === 'number' && value >= 0 && value < length; });
+
+        if (state.day === today && isValidOrder && typeof state.pointer === 'number' && typeof state.lastIndex === 'number') {
+          return state;
+        }
+      }
+    } catch (e) {
+      // Ignore
+    }
+
+    var order = shuffleIndices(length);
+
+    if (length > 1) {
+      var shift = ((pick - 1) % length + length) % length;
+      var itemsToMove = order.splice(0, shift);
+      for (var i = 0; i < itemsToMove.length; i++) {
+        order.push(itemsToMove[i]);
       }
     }
-  } catch (e) {
-    // Ignore invalid session data and recreate the queue below.
+
+    return {
+      day: today,
+      order: order,
+      pointer: 0,
+      lastIndex: -1
+    };
   }
 
-  const order = shuffleIndices(length);
-
-  if (length > 1) {
-    const shift = ((pick - 1) % length + length) % length;
-    var itemsToMove = order.splice(0, shift);
-    for (var i = 0; i < itemsToMove.length; i++) {
-      order.push(itemsToMove[i]);
+  function saveQueue(state) {
+    try {
+      sessionStorage.setItem(QUEUE_KEY, JSON.stringify(state));
+    } catch (error) {
+      // Ignore
     }
   }
 
-  return {
-    day: today,
-    order,
-    pointer: 0,
-    lastIndex: -1,
-  };
-}
+  function getNextItemIndex(length) {
+    var state = loadQueue(length);
 
-function saveQueue(state) {
-  try {
-    sessionStorage.setItem(QUEUE_KEY, JSON.stringify(state));
-  } catch (error) {
-    // Ignore Storage quota/Security errors
-  }
-}
+    if (state.pointer >= state.order.length) {
+      state.order = shuffleIndices(length);
 
-function getNextItemIndex(length) {
-  const state = loadQueue(length);
+      if (length > 1 && state.order[0] === state.lastIndex) {
+        var temp = state.order[0];
+        state.order[0] = state.order[1];
+        state.order[1] = temp;
+      }
 
-  if (state.pointer >= state.order.length) {
-    state.order = shuffleIndices(length);
-
-    if (length > 1 && state.order[0] === state.lastIndex) {
-      const temp = state.order[0];
-      state.order[0] = state.order[1];
-      state.order[1] = temp;
+      state.pointer = 0;
     }
 
-    state.pointer = 0;
+    var nextIndex = state.order[state.pointer];
+    state.pointer += 1;
+    state.lastIndex = nextIndex;
+    saveQueue(state);
+
+    return nextIndex;
   }
 
-  const nextIndex = state.order[state.pointer];
-  state.pointer += 1;
-  state.lastIndex = nextIndex;
-  saveQueue(state);
+  if (!config || !resultCard || !resultKicker || !resultTitle || !resultCaption || !resultSignature) {
+    window.location.replace("./choose.html");
+  } else {
+    document.body.className += " theme-" + mode;
+    document.title = config.title + " | 퀸의 마인드";
 
-  return nextIndex;
-}
-
-if (!config || !resultCard || !resultKicker || !resultTitle || !resultCaption || !resultSignature) {
-  window.location.replace("./choose.html");
-} else {
-  document.body.classList.add(`theme-${mode}`);
-  document.title = `${config.title} | 퀸의 마인드`;
-
-
-  function renderImage(item) {
-    if (!resultMedia || !resultImage) {
-      return;
-    }
-
-    resultMedia.hidden = true;
-    resultImage.alt = `${config.title} 이미지 ${item.id}`;
-
-    const candidates = getImageCandidates(mode, item.id);
-    let candidateIndex = 0;
-
-    const tryNextImage = () => {
-      if (candidateIndex >= candidates.length) {
-        resultMedia.hidden = true;
-        resultImage.removeAttribute("src");
+    function renderImage(item) {
+      if (!resultMedia || !resultImage) {
         return;
       }
 
-      const preloader = new Image();
-      preloader.onload = () => {
-        resultImage.src = preloader.src;
-        resultMedia.hidden = false;
-      };
-      preloader.onerror = () => {
-        candidateIndex += 1;
-        tryNextImage();
-      };
-      preloader.src = candidates[candidateIndex];
-    };
+      // Initial visible false to prevent flicker, but but ensure it triggers.
+      resultMedia.style.display = 'none';
+      resultImage.alt = config.title + " 이미지 " + item.id;
 
-    tryNextImage();
-  }
+      var candidates = window.getImageCandidates(mode, item.id);
+      var candidateIndex = 0;
 
-  function renderResult() {
-    const nextIndex = getNextItemIndex(config.items.length);
-    const item = config.items[nextIndex];
-    const copy = buildResultCopy(mode, item);
-    const lead = splitLeadText(removeLeadPrefix(copy.lead));
-    const captionParts = [lead.secondary, copy.support].filter(Boolean);
+      function tryNextImage() {
+        if (candidateIndex >= candidates.length) {
+          resultMedia.style.display = 'none';
+          resultImage.removeAttribute("src");
+          return;
+        }
 
-    resultKicker.textContent = config.label;
-    resultTitle.innerHTML = formatLeadForDisplay(lead.primary);
-    if (captionParts.length > 0) {
-      resultCaption.hidden = false;
-      resultCaption.textContent = captionParts.join(" ");
-    } else {
-      resultCaption.hidden = true;
-      resultCaption.textContent = "";
+        var preloader = new Image();
+        preloader.onload = function() {
+          resultImage.src = preloader.src;
+          resultMedia.removeAttribute("hidden");
+          resultMedia.style.display = ""; // Defaults to grid from CSS
+        };
+        preloader.onerror = function() {
+          candidateIndex += 1;
+          tryNextImage();
+        };
+        preloader.src = candidates[candidateIndex];
+      }
+
+      tryNextImage();
     }
-    resultSignature.innerHTML = `${copy.signatureTop}<span>${copy.signatureBottom}</span>`;
-    renderImage(item);
-  }
 
-  function showResult(isReroll = false) {
-    window.clearTimeout(renderTimer);
-    resultCard.hidden = true;
+    function renderResult() {
+      var nextIndex = getNextItemIndex(config.items.length);
+      var item = config.items[nextIndex];
+      var copy = window.buildResultCopy(mode, item);
+      var lead = splitLeadText(removeLeadPrefix(copy.lead));
+      var captionParts = [];
+      if (lead.secondary) captionParts.push(lead.secondary);
+      if (copy.support) captionParts.push(copy.support);
 
-    if (isReroll) {
-      renderTimer = window.setTimeout(() => {
+      resultKicker.textContent = config.label;
+      resultTitle.innerHTML = formatLeadForDisplay(lead.primary);
+      
+      if (captionParts.length > 0) {
+        resultCaption.removeAttribute("hidden");
+        resultCaption.style.display = "";
+        resultCaption.textContent = captionParts.join(" ");
+      } else {
+        resultCaption.setAttribute("hidden", "");
+        resultCaption.style.display = "none";
+        resultCaption.textContent = "";
+      }
+      
+      resultSignature.innerHTML = copy.signatureTop + "<span>" + copy.signatureBottom + "</span>";
+      renderImage(item);
+    }
+
+    function showResult(isReroll) {
+      window.clearTimeout(renderTimer);
+      resultCard.style.display = 'none';
+
+      if (isReroll) {
+        renderTimer = window.setTimeout(function() {
+          renderResult();
+          resultCard.removeAttribute("hidden");
+          resultCard.style.display = "";
+        }, 300);
+      } else {
         renderResult();
-        resultCard.hidden = false;
-      }, 300);
-    } else {
-      renderResult();
-      resultCard.hidden = false;
+        resultCard.removeAttribute("hidden");
+        resultCard.style.display = "";
+      }
     }
-  }
 
-  if (rerollButton) {
-    rerollButton.addEventListener("click", () => {
-      showResult(true);
-    });
-  }
+    if (rerollButton) {
+      rerollButton.onclick = function() {
+        showResult(true);
+      };
+    }
 
-  showResult(false);
-}
+    showResult(false);
+  }
+})();

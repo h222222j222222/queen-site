@@ -87,7 +87,7 @@ button {
 }
 
 .page-result {
-  --page-background: url("./images/backgrounds/Q_3.png");
+  --page-background: url("./images/backgrounds/q_3.png?v=2.1");
 }
 
 .fortune-body::before,
@@ -283,7 +283,7 @@ button {
   background:
     linear-gradient(180deg, rgba(31, 14, 25, 0.04), rgba(18, 8, 15, 0.26)),
     linear-gradient(180deg, rgba(255, 247, 236, 0.04), rgba(71, 39, 58, 0.08)),
-    url("./images/backgrounds/Q_1.png") center / cover no-repeat;
+    url("./images/backgrounds/q_1.png?v=2.1") center / cover no-repeat;
   box-shadow:
     inset 0 0 0 1px rgba(255, 243, 232, 0.04),
     inset 0 0 36px rgba(17, 8, 14, 0.14),
@@ -368,7 +368,7 @@ button {
   background:
     linear-gradient(180deg, rgba(33, 17, 30, 0.2), rgba(19, 9, 16, 0.7)),
     linear-gradient(180deg, rgba(60, 31, 51, 0.26), rgba(24, 11, 21, 0.78)),
-    url("./images/backgrounds/Q_2.png") center / cover no-repeat;
+    url("./images/backgrounds/q_2.png?v=2.1") center / cover no-repeat;
   box-shadow:
     inset 0 0 0 1px rgba(255, 245, 234, 0.04),
     inset 0 0 60px rgba(17, 7, 13, 0.34),
@@ -516,7 +516,7 @@ button {
   border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(29, 16, 29, 0.08), rgba(29, 16, 29, 0.2)),
-    url("./images/backgrounds/card.png") center / cover no-repeat;
+    url("./images/backgrounds/card.png?v=2.1") center / cover no-repeat;
   border: 1px solid rgba(220, 184, 132, 0.26);
   color: var(--ivory);
   text-decoration: none;
@@ -660,7 +660,11 @@ button {
 }
 
 .result-message-card .result-kicker { animation-delay: 0.1s; }
-.result-message-card .result-media { animation: zoom-glow-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.25s; opacity: 0; }
+.result-message-card .result-media {
+  animation: zoom-glow-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.25s;
+  opacity: 1;
+}
 .result-message-card .result-title { animation-delay: 0.4s; }
 .result-message-card .result-caption { animation-delay: 0.5s; }
 .result-message-card .result-signature { animation-delay: 0.6s; }
@@ -1062,5 +1066,7 @@ button {
   *::after {
     animation: none !important;
     transition: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
