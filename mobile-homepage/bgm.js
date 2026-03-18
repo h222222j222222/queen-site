@@ -118,20 +118,31 @@
     }
 
     function armAutoplayRetry() {
-      // Regardless of whether we know it's blocked, mobile often needs 
-      // a direct click to start. We'll listen for the first one.
-      var resume = function() {
-        if (wantsMusic && audio && audio.paused) {
-          attemptPlay();
+      var forceUnlock = function() {
+        if (!wantsMusic || !audio) return;
+        
+        // On mobile, multiple interactions might be needed or 
+        // a simple play() might fail until the specific event loop.
+        var playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(function() {
+            autoplayBlocked = false;
+            updateButton();
+            cleanup();
+          }).catch(function(err) {
+            // Still blocked, keep listeners
+          });
         }
-        // Cleanup all listeners after first successful attempt/interaction
+      };
+
+      var cleanup = function() {
         ["pointerdown", "touchstart", "click", "keydown", "scroll"].forEach(function(evt) {
-          window.removeEventListener(evt, resume, { capture: true });
+          window.removeEventListener(evt, forceUnlock, { capture: true });
         });
       };
 
       ["pointerdown", "touchstart", "click", "keydown", "scroll"].forEach(function(evt) {
-        window.addEventListener(evt, resume, { capture: true, once: true });
+        window.addEventListener(evt, forceUnlock, { capture: true });
       });
     }
 
@@ -180,8 +191,11 @@
 
     setAudioSource();
     updateButton();
-    // Always arm retry for mobile autoplay policy
+    // Aggressively arm for mobile
     armAutoplayRetry();
+    
+    // One more silent attempt in case browser allows it (rare but possible)
+    setTimeout(attemptPlay, 1000);
   }
 
   if (lyricsToggle && lyricsDialog && lyricsContent && lyricsClose) {
