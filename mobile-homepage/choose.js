@@ -21,11 +21,7 @@
 
   var todayMind = window.getTodayMind();
 
-  function compactText(text, maxLength) {
-    var normalized = text.trim();
-    if (normalized.length <= maxLength) return normalized;
-    return normalized.slice(0, maxLength).trim() + "...";
-  }
+
 
   function updateMode(mode) {
     document.body.setAttribute("data-mode", mode);
@@ -50,11 +46,11 @@
   }
 
   if (chooseMindHeadline) {
-    chooseMindHeadline.textContent = compactText(todayMind.headline, 40);
+    chooseMindHeadline.textContent = todayMind.headline;
   }
 
   if (chooseMindAdvice) {
-    chooseMindAdvice.textContent = compactText(todayMind.tip, 58);
+    chooseMindAdvice.textContent = todayMind.tip;
   }
 
   for (var k = 0; k < moodTabs.length; k++) {
