@@ -118,19 +118,20 @@
     }
 
     function armAutoplayRetry() {
-      if (!autoplayBlocked) return;
-
+      // Regardless of whether we know it's blocked, mobile often needs 
+      // a direct click to start. We'll listen for the first one.
       var resume = function() {
-        if (wantsMusic && audio.paused) {
+        if (wantsMusic && audio && audio.paused) {
           attemptPlay();
         }
-        ["pointerdown", "touchstart", "click", "keydown"].forEach(function(evt) {
-          window.removeEventListener(evt, resume);
+        // Cleanup all listeners after first successful attempt/interaction
+        ["pointerdown", "touchstart", "click", "keydown", "scroll"].forEach(function(evt) {
+          window.removeEventListener(evt, resume, { capture: true });
         });
       };
 
-      ["pointerdown", "touchstart", "click", "keydown"].forEach(function(evt) {
-        window.addEventListener(evt, resume);
+      ["pointerdown", "touchstart", "click", "keydown", "scroll"].forEach(function(evt) {
+        window.addEventListener(evt, resume, { capture: true, once: true });
       });
     }
 
@@ -179,6 +180,8 @@
 
     setAudioSource();
     updateButton();
+    // Always arm retry for mobile autoplay policy
+    armAutoplayRetry();
   }
 
   if (lyricsToggle && lyricsDialog && lyricsContent && lyricsClose) {

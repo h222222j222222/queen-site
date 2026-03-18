@@ -1043,6 +1043,7 @@ button {
   font-size: 1.4rem;
   opacity: 0;
   animation: particle-fly 3.5s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .loader-particles .p1 { top: 10%; left: 80%; animation-delay: 0s; font-size: 1.2rem; }
@@ -1053,11 +1054,11 @@ button {
 .loader-particles .p6 { top: 50%; left: -20%; animation-delay: 0.3s; font-size: 1.4rem; }
 
 @keyframes particle-fly {
-  0% { transform: translate(0, 0) rotate(0deg) scale(0); opacity: 0; }
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(0); opacity: 0; }
   20% { opacity: 0.8; }
-  50% { transform: translate(15px, -25px) rotate(15deg) scale(1.1); }
+  50% { transform: translate3d(15px, -25px, 0) rotate(15deg) scale(1.1); }
   80% { opacity: 0.6; }
-  100% { transform: translate(30px, -50px) rotate(30deg) scale(0); opacity: 0; }
+  100% { transform: translate3d(30px, -50px, 0) rotate(30deg) scale(0); opacity: 0; }
 }
 
 .full-loader {
@@ -1087,6 +1088,7 @@ button {
   position: absolute;
   opacity: 0;
   animation: bg-float 7s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .bg-particles .bp1 { top: 10%; left: 8%; animation-delay: 0s; font-size: 1.5rem; }
@@ -1098,11 +1100,11 @@ button {
 .bg-particles .bp7 { top: 5%; left: 65%; animation-delay: 3.5s; font-size: 1.7rem; }
 
 @keyframes bg-float {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
   15% { opacity: 0.35; }
-  50% { transform: translateY(-40px) rotate(10deg); opacity: 0.45; }
+  50% { transform: translate3d(0, -40px, 0) rotate(10deg); opacity: 0.45; }
   85% { opacity: 0.25; }
-  100% { transform: translateY(-80px) rotate(20deg); opacity: 0; }
+  100% { transform: translate3d(0, -80px, 0) rotate(20deg); opacity: 0; }
 }
 
 @keyframes spin {
@@ -1120,8 +1122,15 @@ button {
 }
 
 @keyframes text-fade {
-  0% { opacity: 0.6; transform: translateY(2px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% { opacity: 0.6; transform: translate3d(0, 2px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@media (max-width: 768px) {
+  .bg-particles,
+  .loader-particles {
+    display: none !important;
+  }
 }
 
 @media (max-width: 428px) {
