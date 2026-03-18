@@ -48,7 +48,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: var(--font-body);
   color: var(--ivory);
 }
@@ -117,7 +117,7 @@ button {
   position: relative;
   z-index: 1;
   width: min(100%, 428px);
-  height: 100dvh;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: 12px 14px 14px;
   display: flex;
@@ -129,7 +129,6 @@ button {
   position: relative;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
   border-radius: var(--radius-xl);
   border: 1px solid var(--panel-border);
   background:

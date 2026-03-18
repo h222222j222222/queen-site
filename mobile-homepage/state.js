@@ -11,18 +11,18 @@ export const readState = () => {
   const raw = sessionStorage.getItem(STORAGE_KEY);
 
   if (!raw) {
-    return { ...defaultState };
+    return Object.assign({}, defaultState);
   }
 
   try {
-    return { ...defaultState, ...JSON.parse(raw) };
-  } catch {
-    return { ...defaultState };
+    return Object.assign({}, defaultState, JSON.parse(raw));
+  } catch (e) {
+    return Object.assign({}, defaultState);
   }
 };
 
 export const writeState = (nextState) => {
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ ...readState(), ...nextState }));
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(Object.assign({}, readState(), nextState)));
 };
 
 export const clearState = () => {

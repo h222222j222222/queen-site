@@ -83,7 +83,7 @@ function loadQueue(length) {
         return state;
       }
     }
-  } catch {
+  } catch (e) {
     // Ignore invalid session data and recreate the queue below.
   }
 
