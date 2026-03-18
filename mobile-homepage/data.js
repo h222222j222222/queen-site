@@ -414,13 +414,11 @@ window.getImageCandidates = function(mode, id) {
   var paddedId = id < 10 ? "0" + id : String(id);
   // Ensure strict relative path and lowercase mode/filename (filenames are already lowercase)
   var basePath = "./images/" + mode.toLowerCase() + "/" + mode.toLowerCase() + "_" + paddedId;
-  // Use a unique version query string for cache busting
-  var v = "?v=2.1"; 
   return [
-    basePath + ".jpg" + v,
-    basePath + ".png" + v,
-    basePath + ".webp" + v,
-    basePath + ".jpeg" + v
+    basePath + ".jpg",
+    basePath + ".png",
+    basePath + ".webp",
+    basePath + ".jpeg"
   ];
 }
 

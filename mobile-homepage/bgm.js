@@ -19,21 +19,25 @@
 
   if (audio && toggle) {
     var savedPreference = localStorage.getItem(STORAGE_KEY);
+    // Default to true if never set
     var wantsMusic = savedPreference === null ? true : savedPreference === "true";
     var autoplayBlocked = false;
     var audioCandidateIndex = 0;
+    var hasResumedTime = false;
 
     audio.volume = 0.42;
-    audio.autoplay = true;
+    // VERY IMPORTANT: Turn off autoplay to prevent starting from 0 before we adjust currentTime
+    audio.autoplay = false; 
 
-    var savedTime = Number(sessionStorage.getItem(TIME_KEY) || 0);
-    if (isFinite(savedTime) && savedTime > 0) {
-      var onLoadedMetadata = function() {
-        audio.currentTime = Math.min(savedTime, isFinite(audio.duration) ? audio.duration : savedTime);
-        audio.removeEventListener("loadedmetadata", onLoadedMetadata);
-      };
-      audio.addEventListener("loadedmetadata", onLoadedMetadata);
+    // Sync time to storage frequently
+    function syncTimeToStorage() {
+      if (audio && !audio.paused && isFinite(audio.currentTime)) {
+        sessionStorage.setItem(TIME_KEY, String(audio.currentTime));
+      }
     }
+    
+    // Every 500ms should be enough without killing performance
+    setInterval(syncTimeToStorage, 500);
 
     function updateButton() {
       var isPlaying = !audio.paused && !audio.ended;
@@ -49,7 +53,7 @@
       toggle.title = isPlaying ? "배경음악 끄기" : "배경음악 켜기";
     }
 
-    function persistState() {
+    function persistPreference() {
       localStorage.setItem(STORAGE_KEY, String(wantsMusic));
     }
 
@@ -60,7 +64,6 @@
       }
       
       var urlStr = AUDIO_CANDIDATES[audioCandidateIndex];
-      // Fallback for missing URL constructor or weird environments
       try {
         audio.src = new URL(urlStr, window.location.href).href;
       } catch (e) {
@@ -69,11 +72,30 @@
       audio.load();
     }
 
+    function resumeTime() {
+      if (hasResumedTime) return;
+      
+      var savedTime = Number(sessionStorage.getItem(TIME_KEY) || 0);
+      if (isFinite(savedTime) && savedTime > 0) {
+        try {
+          audio.currentTime = Math.min(savedTime, isFinite(audio.duration) ? audio.duration : savedTime);
+          hasResumedTime = true;
+        } catch (e) {
+          // Metadata might not be ready yet
+        }
+      } else {
+        hasResumedTime = true; // No time to resume
+      }
+    }
+
     function attemptPlay() {
       if (!wantsMusic || !audio.src) {
         updateButton();
         return;
       }
+
+      // Final check to make sure time is set before playing
+      resumeTime();
 
       var playTask = audio.play();
       if (playTask && playTask.catch) {
@@ -84,13 +106,12 @@
         });
       }
       
-      // Update UI immediately since we can't always wait for promise
       updateButton();
     }
 
     function pauseAudio() {
       wantsMusic = false;
-      persistState();
+      persistPreference();
       autoplayBlocked = false;
       audio.pause();
       updateButton();
@@ -103,16 +124,14 @@
         if (wantsMusic && audio.paused) {
           attemptPlay();
         }
-        window.removeEventListener("pointerdown", resume);
-        window.removeEventListener("touchstart", resume);
-        window.removeEventListener("click", resume);
-        window.removeEventListener("keydown", resume);
+        ["pointerdown", "touchstart", "click", "keydown"].forEach(function(evt) {
+          window.removeEventListener(evt, resume);
+        });
       };
 
-      window.addEventListener("pointerdown", resume);
-      window.addEventListener("touchstart", resume);
-      window.addEventListener("click", resume);
-      window.addEventListener("keydown", resume);
+      ["pointerdown", "touchstart", "click", "keydown"].forEach(function(evt) {
+        window.addEventListener(evt, resume);
+      });
     }
 
     toggle.onclick = function() {
@@ -120,7 +139,15 @@
         pauseAudio();
       } else {
         wantsMusic = true;
-        persistState();
+        persistPreference();
+        autoplayBlocked = false;
+        attemptPlay();
+      }
+    };
+
+    audio.onloadedmetadata = function() {
+      resumeTime();
+      if (wantsMusic) {
         attemptPlay();
       }
     };
@@ -140,13 +167,18 @@
     audio.onpause = updateButton;
     audio.onended = updateButton;
 
-    window.onbeforeunload = function() {
-      sessionStorage.setItem(TIME_KEY, String(audio.currentTime || 0));
+    // Save state on navigation/hidden
+    var saveState = function() {
+      syncTimeToStorage();
     };
+    window.addEventListener("pagehide", saveState);
+    window.addEventListener("visibilitychange", function() {
+      if (document.hidden) saveState();
+    });
+    window.onbeforeunload = saveState;
 
-    persistState();
-    updateButton();
     setAudioSource();
+    updateButton();
   }
 
   if (lyricsToggle && lyricsDialog && lyricsContent && lyricsClose) {

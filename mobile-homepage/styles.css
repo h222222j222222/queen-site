@@ -87,7 +87,7 @@ button {
 }
 
 .page-result {
-  --page-background: url("./images/backgrounds/q_3.png?v=2.1");
+  --page-background: url("./images/backgrounds/q_3.png");
 }
 
 .fortune-body::before,
@@ -280,10 +280,13 @@ button {
 .home-panel {
   justify-content: flex-end;
   padding: 16px 18px calc(env(safe-area-inset-bottom, 12px) + 36px);
-  background:
+  background-image:
     linear-gradient(180deg, rgba(31, 14, 25, 0.04), rgba(18, 8, 15, 0.26)),
     linear-gradient(180deg, rgba(255, 247, 236, 0.04), rgba(71, 39, 58, 0.08)),
-    url("./images/backgrounds/q_1.png?v=2.1") center / cover no-repeat;
+    url("./images/backgrounds/q_1.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   box-shadow:
     inset 0 0 0 1px rgba(255, 243, 232, 0.04),
     inset 0 0 36px rgba(17, 8, 14, 0.14),
@@ -365,10 +368,13 @@ button {
 
 .choose-panel {
   padding-top: 76px;
-  background:
+  background-image:
     linear-gradient(180deg, rgba(33, 17, 30, 0.2), rgba(19, 9, 16, 0.7)),
     linear-gradient(180deg, rgba(60, 31, 51, 0.26), rgba(24, 11, 21, 0.78)),
-    url("./images/backgrounds/q_2.png?v=2.1") center / cover no-repeat;
+    url("./images/backgrounds/q_2.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   box-shadow:
     inset 0 0 0 1px rgba(255, 245, 234, 0.04),
     inset 0 0 60px rgba(17, 7, 13, 0.34),
@@ -514,9 +520,12 @@ button {
   min-height: 198px;
   padding: 16px 8px;
   border-radius: 20px;
-  background:
+  background-image:
     linear-gradient(180deg, rgba(29, 16, 29, 0.08), rgba(29, 16, 29, 0.2)),
-    url("./images/backgrounds/card.png?v=2.1") center / cover no-repeat;
+    url("./images/backgrounds/card.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   border: 1px solid rgba(220, 184, 132, 0.26);
   color: var(--ivory);
   text-decoration: none;
