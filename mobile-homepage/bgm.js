@@ -21,7 +21,7 @@
     var savedPreference = localStorage.getItem(STORAGE_KEY);
     // Default to true if never set
     var wantsMusic = savedPreference === null ? true : savedPreference === "true";
-    var autoplayBlocked = false;
+    var autoplayBlocked = (savedPreference === null || savedPreference === "true"); // Assume blocked until first gesture
     var audioCandidateIndex = 0;
     var hasResumedTime = false;
 
@@ -40,17 +40,24 @@
     setInterval(syncTimeToStorage, 500);
 
     function updateButton() {
-      var isPlaying = !audio.paused && !audio.ended;
+      var isPaused = audio.paused || audio.ended;
+      var isPlaying = !isPaused;
+      
+      // If we WANT music but it's just blocked by the browser, 
+      // show the 'Playing' icon (🎵) so user knows it's active/waiting,
+      // and only show 'Muted' (🔇) if they explicitly turned it off.
+      var showPlayingMode = wantsMusic; 
 
-      if (isPlaying) {
+      if (showPlayingMode) {
         toggle.className = toggle.className.replace(/\bis-playing\b/g, '') + ' is-playing';
       } else {
         toggle.className = toggle.className.replace(/\bis-playing\b/g, '');
       }
-      toggle.setAttribute("aria-pressed", String(isPlaying));
-      toggle.textContent = isPlaying ? "🎵" : "🔇";
-      toggle.setAttribute("aria-label", isPlaying ? "배경음악 끄기" : "배경음악 켜기");
-      toggle.title = isPlaying ? "배경음악 끄기" : "배경음악 켜기";
+      
+      toggle.setAttribute("aria-pressed", String(showPlayingMode));
+      toggle.textContent = showPlayingMode ? "🎵" : "🔇";
+      toggle.setAttribute("aria-label", showPlayingMode ? "배경음악 끄기" : "배경음악 켜기");
+      toggle.title = showPlayingMode ? "배경음악 끄기" : "배경음악 켜기";
     }
 
     function persistPreference() {
@@ -118,35 +125,39 @@
     }
 
     function armAutoplayRetry() {
-      var forceUnlock = function() {
+      // The browser requires a 'User Gesture' to play audio for the first time.
+      // We'll listen once on the whole document to UNLOCK the audio.
+      var unlock = function() {
         if (!wantsMusic || !audio) return;
         
-        // On mobile, multiple interactions might be needed or 
-        // a simple play() might fail until the specific event loop.
-        var playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.then(function() {
-            autoplayBlocked = false;
-            updateButton();
-            cleanup();
-          }).catch(function(err) {
-            // Still blocked, keep listeners
-          });
+        // Only trigger play if it's currently paused AND we haven't manually muted
+        if (audio.paused) {
+          var playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(function() {
+              autoplayBlocked = false;
+              updateButton();
+            }).catch(function(err) {
+              // Failed to play, keep trying
+            });
+          }
         }
-      };
-
-      var cleanup = function() {
-        ["pointerdown", "touchstart", "click", "keydown", "scroll"].forEach(function(evt) {
-          window.removeEventListener(evt, forceUnlock, { capture: true });
+        
+        // Remove listeners once the user has performed the 'unlock' gesture
+        ["pointerdown", "touchstart", "click"].forEach(function(evt) {
+          window.removeEventListener(evt, unlock, { capture: true });
         });
       };
 
-      ["pointerdown", "touchstart", "click", "keydown", "scroll"].forEach(function(evt) {
-        window.addEventListener(evt, forceUnlock, { capture: true });
+      ["pointerdown", "touchstart", "click"].forEach(function(evt) {
+        window.addEventListener(evt, unlock, { capture: true, once: true });
       });
     }
 
-    toggle.onclick = function() {
+    toggle.onclick = function(e) {
+      // CRITICAL: Stop propagation so the 'unlock' anywhere logic doesn't immediate undo a mute
+      if (e && e.stopPropagation) e.stopPropagation();
+      
       if (!audio.paused && !audio.ended) {
         pauseAudio();
       } else {
